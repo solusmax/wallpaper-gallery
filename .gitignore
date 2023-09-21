@@ -32,3 +32,5 @@ dist-ssr
 .sow/
 Thumbs.db
 Thumbs.db:encryptable
+
+public/images
