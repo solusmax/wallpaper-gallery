@@ -1,4 +1,5 @@
 import Gallery from "../Gallery/Gallery"
+import config from '../../config.json'
 import { mockPhotos } from '../../data'
 
 const images = mockPhotos.slice();
@@ -6,7 +7,10 @@ const images = mockPhotos.slice();
 function App() {
   return (
     <>
-      <Gallery images={images} refreshFrequency={30 * 60 * 1000} />
+      <Gallery
+        images={images}
+        refreshFrequency={config.autorefreshFrequencyMinutes * 60 * 1000}
+      />
     </>
   )
 }
