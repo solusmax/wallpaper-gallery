@@ -1,6 +1,7 @@
-export const shuffleArray = (array) => {
+export const getShuffledSlicedArray = (array, newSize) => {
   const newArray = [...array];
   const arraySize = newArray.length;
+  const resultArrayNewSize = newSize ?? arraySize;
   let index = -1;
   let lastIndex = arraySize - 1;
 
@@ -14,7 +15,7 @@ export const shuffleArray = (array) => {
 
   newArray.length = arraySize;
 
-  return newArray;
+  return newArray.splice(0, resultArrayNewSize);
 }
 
 export const getRandomInteger = (min, max) => {

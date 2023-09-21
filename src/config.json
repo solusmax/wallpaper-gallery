@@ -1,3 +1,10 @@
 {
-  "autorefreshFrequencyMinutes": 30
+  "targetRowHeight": 480,
+  "autoRefresh": true,
+  "autoRefreshFrequencyMinutes": 120,
+  "imagesToRenderCount": 50,
+  "imageHoverEffect": false,
+  "refreshButton": true,
+  "refreshButtonInvisibleIfNoHover": true,
+  "refreshButtonPositionSide": "bottom-left"
 }

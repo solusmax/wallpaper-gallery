@@ -1,0 +1,89 @@
+.refresh-button {
+  position: fixed;
+  z-index: 9999;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+
+  opacity: 0.6;
+  border: none;
+  background-color: #ed74b3;
+
+  transition-duration: 0.15s;
+  transition-property: opacity;
+
+  cursor: pointer;
+}
+
+.refresh-button--invisible {
+  opacity: 0;
+}
+
+.refresh-button--center-left {
+  left: 10px;
+  top: 50%;
+
+  transform: translateY(-50%);
+}
+
+.refresh-button--center-right {
+  right: 10px;
+  top: 50%;
+
+  transform: translateY(-50%);
+}
+
+.refresh-button--top-left {
+  left: 10px;
+  top: 10px;
+}
+
+.refresh-button--top-center {
+  left: 50%;
+  top: 10px;
+
+  transform: translateX(-50%);
+}
+
+.refresh-button--top-right {
+  right: 10px;
+  top: 10px;
+}
+
+.refresh-button--bottom-left {
+  left: 10px;
+  bottom: 10px;
+}
+
+.refresh-button--bottom-center {
+  left: 50%;
+  bottom: 10px;
+
+  transform: translateX(-50%);
+}
+
+.refresh-button--bottom-right {
+  right: 10px;
+  bottom: 10px;
+}
+
+.refresh-button > svg {
+  fill: #ffffff;
+  transform: scale(0.7);
+}
+
+.refresh-button:hover {
+  opacity: 0.8;
+}
+
+.refresh-button:active {
+  opacity: 0.9;
+}
+
+.refresh-button:focus {
+  outline: none;
+}

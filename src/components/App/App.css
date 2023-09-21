@@ -1,0 +1,20 @@
+html {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-height: 100%;
+  margin: 0;
+  padding: 0;
+
+  overflow: hidden;
+  background-color: #ffffff;
+}
+
+.image-hover-effect .react-photo-album--photo:hover {
+  transition-duration: 0.15s;
+  transition-property: transform;
+  transform: scale(1.015);
+}
