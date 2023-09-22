@@ -3,8 +3,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite --open --host",
-    "build": "npm run lint && sh bash/build.sh -s && vite build && sh bash/build.sh -e",
-    "build:demo": "sh bash/build.sh -s && vite build --minify false && sh bash/build.sh -e",
+    "build": "npm run lint && npm run build:demo",
+    "build:demo": "sh bash/build.sh -s && vite build && sh bash/build.sh -e",
     "backup-project-json": "sh bash/build.sh -c",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "npm run build && vite preview --open"
