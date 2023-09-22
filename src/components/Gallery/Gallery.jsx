@@ -1,12 +1,11 @@
 import PropTypes from 'prop-types';
+import { useEffect, useState } from 'react';
+import { getShuffledSlicedArray } from '../../utils/common';
 import PhotoAlbum from 'react-photo-album';
 import Lightbox from "yet-another-react-lightbox";
 import Zoom from "yet-another-react-lightbox/plugins/zoom";
 import "yet-another-react-lightbox/styles.css";
-import { getShuffledSlicedArray } from '../../utils/common';
-import { useEffect, useState } from 'react';
 import RefreshButton from '../RefreshButton/RefreshButton';
-
 
 export default function Gallery({
   images,
@@ -18,27 +17,29 @@ export default function Gallery({
   refreshButtonInvisibleIfNoHover,
   refreshButtonPositionSide,
 }) {
-  const [currentImages, setCurrentImages] = useState(getShuffledSlicedArray(images, imagesToRenderCount));
+  const [renderedImages, setRenderedImages] = useState(getShuffledSlicedArray(images, imagesToRenderCount));
   const [selectedImage, setSelectedImage] = useState(-1);
 
   useEffect(() => {
+    setRenderedImages(getShuffledSlicedArray(images, imagesToRenderCount));
+  }, [images, imagesToRenderCount])
 
+  useEffect(() => {
     const interval = setInterval(() => {
       if (!(selectedImage >= 0) && autoRefresh) {
-        setCurrentImages(getShuffledSlicedArray(images, imagesToRenderCount))
+        setRenderedImages(getShuffledSlicedArray(images, imagesToRenderCount));
       }
-
     }, autoRefreshFrequency);
 
     return () => {
       clearInterval(interval);
     };
-  }, [currentImages, images, autoRefreshFrequency, selectedImage, autoRefresh, imagesToRenderCount]);
+  }, [autoRefreshFrequency, selectedImage, autoRefresh, imagesToRenderCount, images]);
 
   const handleRefreshButtonClick = (evt) => {
     evt.preventDefault();
 
-    setCurrentImages(getShuffledSlicedArray(images, imagesToRenderCount));
+    setRenderedImages(getShuffledSlicedArray(images, imagesToRenderCount));
   }
 
   return (
@@ -50,14 +51,14 @@ export default function Gallery({
           layout="rows"
           spacing={() => 0}
           targetRowHeight={() => targetRowHeight}
-          photos={currentImages}
+          photos={renderedImages}
           onClick={({ index: current }) => {
             setSelectedImage(current)
           }}
         />
         <Lightbox
           index={0}
-          slides={[currentImages[selectedImage]]}
+          slides={[renderedImages[selectedImage]]}
           open={selectedImage >= 0}
           close={() => setSelectedImage(-1)}
           styles={{

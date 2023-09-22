@@ -9,6 +9,7 @@
     "preview": "npm run build && vite preview --open"
   },
   "dependencies": {
+    "decode-uri-component": "^0.4.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-photo-album": "^2.3.0",

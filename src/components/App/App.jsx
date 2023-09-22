@@ -1,10 +1,9 @@
+import config from '../../config.json';
+import { useEffect, useState } from 'react';
 import './App.css';
 import Gallery from '../Gallery/Gallery';
-import config from '../../config.json';
-import { mockPhotos } from '../../data';
-import { useState } from 'react';
-
-const images = mockPhotos;
+import decodeUriComponent from 'decode-uri-component';
+import { loadImage, isImagesSame } from '../../utils';
 
 let {
   targetRowHeight: targetRowHeightDefault,
@@ -18,6 +17,10 @@ let {
 } = config;
 
 function App() {
+  const [images, setImages] = useState([]);
+  const [newImages, setNewImages] = useState([]);
+  const [removedImageURLs, setRemovedImageURLs] = useState([]);
+
   const [targetRowHeight, setTargetRowHeight] = useState(targetRowHeightDefault);
   const [autoRefresh, setAutoRefresh] = useState(autoRefreshDefault);
   const [autoRefreshFrequencyMinutes, setAutoRefreshFrequencyMinutes] = useState(autoRefreshFrequencyMinutesDefault);
@@ -27,36 +30,115 @@ function App() {
   const [refreshButtonInvisibleIfNoHover, setRefreshButtonInvisibleIfNoHover] = useState(refreshButtonInvisibleIfNoHoverDefault);
   const [refreshButtonPositionSide, setRefreshButtonPositionSide] = useState(refreshButtonPositionSideDefault);
 
-  if (window.wallpaperPropertyListener) {
-    window.wallpaperPropertyListener = {
-      applyUserProperties: function(properties) {
-        if (properties.targetrowheight) {
-          setTargetRowHeight(properties.targetrowheight.value);
-        }
-        if (properties.autorefresh) {
-          setAutoRefresh(properties.autorefresh.value);
-        }
-        if (properties.autorefreshfrequencymins) {
-          setAutoRefreshFrequencyMinutes(properties.autorefreshfrequencymins.value);
-        }
-        if (properties.hovereffect) {
-          setImageHoverEffect(properties.hovereffect.value);
-        }
-        if (properties.numberofimagestodisplay) {
-          setImagesToRenderCount(properties.numberofimagestodisplay.value);
-        }
-        if (properties.refreshbutton) {
-          setRefreshButton(properties.refreshbutton.value);
-        }
-        if (properties.refreshbuttoninvisibility) {
-          setRefreshButtonInvisibleIfNoHover(properties.refreshbuttoninvisibility.value);
-        }
-        if (properties.refreshbuttonposition) {
-          setRefreshButtonPositionSide(properties.refreshbuttonposition.value);
-        }
-      },
-    };
-  }
+  useEffect(() => {
+    const previousNewImages = [...newImages];
+
+    const throttlingTimeoutId = setTimeout(() => {
+      if (isImagesSame(previousNewImages, newImages)) {
+        setImages((prevState) => {
+          return [
+            ...prevState,
+            ...newImages,
+          ]
+        });
+        setRemovedImageURLs([]);
+      }
+    }, 500)
+
+    return () => {
+      clearTimeout(throttlingTimeoutId)
+    }
+  }, [newImages])
+
+  useEffect(() => {
+    if (removedImageURLs.length > 0) {
+      setImages((prevState) => {
+        return [...prevState.filter((image) => {
+          for (let removedImageURL of removedImageURLs) {
+            if (image.src == removedImageURL) {
+              return false;
+            }
+          }
+
+          return true;
+        })]
+      })
+      setNewImages([])
+    }
+  }, [removedImageURLs])
+
+  window.wallpaperPropertyListener = {
+    applyUserProperties: function(properties) {
+      if (properties.targetrowheight) {
+        setTargetRowHeight(properties.targetrowheight.value);
+      }
+      if (properties.autorefresh) {
+        setAutoRefresh(properties.autorefresh.value);
+      }
+      if (properties.autorefreshfrequencymins) {
+        setAutoRefreshFrequencyMinutes(properties.autorefreshfrequencymins.value);
+      }
+      if (properties.hovereffect) {
+        setImageHoverEffect(properties.hovereffect.value);
+      }
+      if (properties.numberofimagestodisplay) {
+        setImagesToRenderCount(properties.numberofimagestodisplay.value);
+      }
+      if (properties.refreshbutton) {
+        setRefreshButton(properties.refreshbutton.value);
+      }
+      if (properties.refreshbuttoninvisibility) {
+        setRefreshButtonInvisibleIfNoHover(properties.refreshbuttoninvisibility.value);
+      }
+      if (properties.refreshbuttonposition) {
+        setRefreshButtonPositionSide(properties.refreshbuttonposition.value);
+      }
+    },
+    userDirectoryFilesAddedOrChanged: (propertyName, changedFiles) => {
+      if (propertyName === 'images') {
+        changedFiles.forEach((newImageUrl) => {
+          const decodedNewImageUrl = decodeUriComponent(newImageUrl);
+
+          if (images.some((image) => image.src === decodedNewImageUrl)) {
+            return;
+          }
+
+          const imgNode = new Image();
+
+          async function generateNewImagesData() {
+            const newImage = await loadImage(decodedNewImageUrl, imgNode);
+
+            setNewImages((prevState) => {
+              return [
+                ...prevState,
+                {
+                  src: decodedNewImageUrl,
+                  width: newImage.naturalWidth,
+                  height: newImage.naturalHeight,
+                },
+              ]
+            })
+          }
+
+          generateNewImagesData();
+        })
+      }
+    },
+    userDirectoryFilesRemoved: (propertyName, removedFiles) => {
+      if (propertyName === 'images') {
+        removedFiles.forEach((removedImage) => {
+          const decodedRemovedImageUrl = decodeUriComponent(removedImage);
+
+          setRemovedImageURLs((prevState) => {
+            return [
+              ...prevState,
+              decodedRemovedImageUrl,
+            ]
+          })
+        })
+      }
+    }
+  };
 
   return (
     <div className={`
