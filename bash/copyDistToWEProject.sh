@@ -1,0 +1,1 @@
+cp -r "dist" "$WE_MY_PROJECTS/$GALLERY_PROJECT"

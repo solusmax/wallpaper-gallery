@@ -1,0 +1,140 @@
+{
+	"file" : "index.html",
+	"general" : 
+	{
+		"properties" : 
+		{
+			"autorefresh" : 
+			{
+				"condition" : "",
+				"index" : 0,
+				"order" : 100,
+				"text" : "Auto refresh",
+				"type" : "bool",
+				"value" : true
+			},
+			"autorefreshfrequencymins" : 
+			{
+				"fraction" : true,
+				"index" : 1,
+				"max" : 1440,
+				"min" : 0.1,
+				"order" : 101,
+				"precision" : 2,
+				"step" : 0.1,
+				"text" : "Auto refresh frequency (mins)",
+				"type" : "slider",
+				"value" : 60
+			},
+			"hovereffect" : 
+			{
+				"index" : 2,
+				"order" : 102,
+				"text" : "Hover effect",
+				"type" : "bool",
+				"value" : true
+			},
+			"images" : 
+			{
+				"fileType" : "image",
+				"index" : 8,
+				"mode" : "fetchall",
+				"order" : 108,
+				"text" : "Images",
+				"type" : "directory",
+				"value" : ""
+			},
+			"numberofimagestodisplay" : 
+			{
+				"fraction" : false,
+				"index" : 7,
+				"max" : 9999,
+				"min" : 20,
+				"order" : 107,
+				"text" : "Number of images to display",
+				"type" : "slider",
+				"value" : 50
+			},
+			"refreshbutton" : 
+			{
+				"index" : 3,
+				"order" : 103,
+				"text" : "Refresh button",
+				"type" : "bool",
+				"value" : true
+			},
+			"refreshbuttoninvisibility" : 
+			{
+				"index" : 4,
+				"order" : 104,
+				"text" : "Refresh button invisibility",
+				"type" : "bool",
+				"value" : true
+			},
+			"refreshbuttonposition" : 
+			{
+				"index" : 5,
+				"options" : 
+				[
+					{
+						"label" : "Top left",
+						"value" : "top-left"
+					},
+					{
+						"label" : "Top center",
+						"value" : "top-center"
+					},
+					{
+						"label" : "Top right",
+						"value" : "top-right"
+					},
+					{
+						"label" : "Center left",
+						"value" : "center-left"
+					},
+					{
+						"label" : "Center right",
+						"value" : "center-right"
+					},
+					{
+						"label" : "Bottom left",
+						"value" : "bottom-left"
+					},
+					{
+						"label" : "Bottom center",
+						"value" : "bottom-center"
+					},
+					{
+						"label" : "Bottom right",
+						"value" : "bottom-right"
+					}
+				],
+				"order" : 105,
+				"text" : "Refresh button position",
+				"type" : "combo",
+				"value" : "center-right"
+			},
+			"schemecolor" : 
+			{
+				"order" : 0,
+				"text" : "ui_browse_properties_scheme_color",
+				"type" : "color",
+				"value" : "1 1 1"
+			},
+			"targetrowheight" : 
+			{
+				"fraction" : false,
+				"index" : 6,
+				"max" : 2160,
+				"min" : 32,
+				"order" : 106,
+				"text" : "Target row height (px)",
+				"type" : "slider",
+				"value" : 480
+			}
+		}
+	},
+	"title" : "Gallery",
+	"type" : "web",
+	"version" : 0
+}
