@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
-import { getShuffledSlicedArray } from '../../utils/common';
+import { getShuffledSlicedArray } from '../../utils';
+import useWindowDimensions from '../../hooks/use-window-dimensions';
 import PhotoAlbum from 'react-photo-album';
 import Lightbox from "yet-another-react-lightbox";
 import Zoom from "yet-another-react-lightbox/plugins/zoom";
@@ -9,7 +10,7 @@ import RefreshButton from '../RefreshButton/RefreshButton';
 
 export default function Gallery({
   images,
-  targetRowHeight,
+  targetNumberOfRows,
   autoRefresh,
   autoRefreshFrequency,
   imagesToRenderCount,
@@ -19,6 +20,8 @@ export default function Gallery({
 }) {
   const [renderedImages, setRenderedImages] = useState(getShuffledSlicedArray(images, imagesToRenderCount));
   const [selectedImage, setSelectedImage] = useState(-1);
+
+  const { height: windowHeight } = useWindowDimensions();
 
   useEffect(() => {
     setRenderedImages(getShuffledSlicedArray(images, imagesToRenderCount));
@@ -50,7 +53,7 @@ export default function Gallery({
         <PhotoAlbum
           layout="rows"
           spacing={() => 0}
-          targetRowHeight={() => targetRowHeight}
+          targetRowHeight={() => Math.round(windowHeight / targetNumberOfRows)}
           photos={renderedImages}
           onClick={({ index: current }) => {
             setSelectedImage(current)
@@ -98,7 +101,7 @@ export default function Gallery({
 
 Gallery.propTypes = {
   images: PropTypes.array.isRequired,
-  targetRowHeight: PropTypes.number.isRequired,
+  targetNumberOfRows: PropTypes.number.isRequired,
   autoRefresh: PropTypes.bool.isRequired,
   autoRefreshFrequency: PropTypes.number.isRequired,
   imagesToRenderCount: PropTypes.number.isRequired,

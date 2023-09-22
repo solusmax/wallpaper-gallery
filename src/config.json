@@ -1,5 +1,5 @@
 {
-  "targetRowHeight": 480,
+  "targetNumberOfRows": 3,
   "autoRefresh": true,
   "autoRefreshFrequencyMinutes": 120,
   "imagesToRenderCount": 50,

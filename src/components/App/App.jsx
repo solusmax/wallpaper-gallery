@@ -6,7 +6,7 @@ import decodeUriComponent from 'decode-uri-component';
 import { loadImage, isImagesSame } from '../../utils';
 
 let {
-  targetRowHeight: targetRowHeightDefault,
+  targetNumberOfRows: targetNumberOfRowsDefault,
   autoRefresh: autoRefreshDefault,
   autoRefreshFrequencyMinutes: autoRefreshFrequencyMinutesDefault,
   imagesToRenderCount: imagesToRenderCountDefault,
@@ -21,7 +21,7 @@ function App() {
   const [newImages, setNewImages] = useState([]);
   const [removedImageURLs, setRemovedImageURLs] = useState([]);
 
-  const [targetRowHeight, setTargetRowHeight] = useState(targetRowHeightDefault);
+  const [targetNumberOfRows, setTargetNumberOfRows] = useState(targetNumberOfRowsDefault);
   const [autoRefresh, setAutoRefresh] = useState(autoRefreshDefault);
   const [autoRefreshFrequencyMinutes, setAutoRefreshFrequencyMinutes] = useState(autoRefreshFrequencyMinutesDefault);
   const [imagesToRenderCount, setImagesToRenderCount] = useState(imagesToRenderCountDefault);
@@ -69,8 +69,8 @@ function App() {
 
   window.wallpaperPropertyListener = {
     applyUserProperties: function(properties) {
-      if (properties.targetrowheight) {
-        setTargetRowHeight(properties.targetrowheight.value);
+      if (properties.targetnumberofrows) {
+        setTargetNumberOfRows(properties.targetnumberofrows.value);
       }
       if (properties.autorefresh) {
         setAutoRefresh(properties.autorefresh.value);
@@ -146,7 +146,7 @@ function App() {
     `}>
       <Gallery
         images={images}
-        targetRowHeight={targetRowHeight}
+        targetNumberOfRows={targetNumberOfRows}
         autoRefresh={autoRefresh}
         autoRefreshFrequency={autoRefreshFrequencyMinutes * 60 * 1000}
         imagesToRenderCount={imagesToRenderCount}

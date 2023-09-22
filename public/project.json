@@ -7,8 +7,8 @@
 			"autorefresh" : 
 			{
 				"condition" : "",
-				"index" : 1,
-				"order" : 101,
+				"index" : 2,
+				"order" : 102,
 				"text" : "Auto refresh",
 				"type" : "bool",
 				"value" : true
@@ -17,20 +17,28 @@
 			{
 				"condition" : "autorefresh.value == true",
 				"fraction" : true,
-				"index" : 2,
+				"index" : 3,
 				"max" : 1440,
 				"min" : 0.1,
-				"order" : 102,
+				"order" : 103,
 				"precision" : 2,
 				"step" : 0.1,
 				"text" : "Auto refresh frequency (mins)",
 				"type" : "slider",
 				"value" : 60
 			},
+			"backgroundcolor" : 
+			{
+				"index" : 9,
+				"order" : 109,
+				"text" : "Background color",
+				"type" : "color",
+				"value" : "1 1 1"
+			},
 			"hovereffect" : 
 			{
-				"index" : 3,
-				"order" : 103,
+				"index" : 4,
+				"order" : 104,
 				"text" : "Hover effect",
 				"type" : "bool",
 				"value" : true
@@ -58,8 +66,8 @@
 			},
 			"refreshbutton" : 
 			{
-				"index" : 4,
-				"order" : 104,
+				"index" : 5,
+				"order" : 105,
 				"text" : "Refresh button",
 				"type" : "bool",
 				"value" : true
@@ -67,8 +75,8 @@
 			"refreshbuttoninvisibility" : 
 			{
 				"condition" : "refreshbutton.value == true",
-				"index" : 5,
-				"order" : 105,
+				"index" : 6,
+				"order" : 106,
 				"text" : "Refresh button invisibility",
 				"type" : "bool",
 				"value" : true
@@ -76,7 +84,7 @@
 			"refreshbuttonposition" : 
 			{
 				"condition" : "refreshbutton.value == true",
-				"index" : 6,
+				"index" : 7,
 				"options" : 
 				[
 					{
@@ -112,7 +120,7 @@
 						"value" : "bottom-right"
 					}
 				],
-				"order" : 106,
+				"order" : 107,
 				"text" : "Refresh button position",
 				"type" : "combo",
 				"value" : "center-right"
@@ -124,16 +132,16 @@
 				"type" : "color",
 				"value" : "1 1 1"
 			},
-			"targetrowheight" : 
+			"targetnumberofrows" : 
 			{
 				"fraction" : false,
-				"index" : 7,
-				"max" : 2160,
-				"min" : 32,
-				"order" : 107,
-				"text" : "Target row height (px)",
+				"index" : 1,
+				"max" : 32,
+				"min" : 1,
+				"order" : 101,
+				"text" : "Target number of rows",
 				"type" : "slider",
-				"value" : 480
+				"value" : 3
 			}
 		}
 	},
