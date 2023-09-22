@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import './App.css';
 import Gallery from '../Gallery/Gallery';
 import decodeUriComponent from 'decode-uri-component';
-import { loadImage, isImagesSame } from '../../utils';
+import { loadImage, isImagesSame, getRgbValue } from '../../utils';
 
 let {
   targetNumberOfRows: targetNumberOfRowsDefault,
@@ -14,6 +14,7 @@ let {
   refreshButton: refreshButtonDefault,
   refreshButtonInvisibleIfNoHover: refreshButtonInvisibleIfNoHoverDefault,
   refreshButtonPositionSide: refreshButtonPositionSideDefault,
+  backgroundColor: backgroundColorDefault,
 } = config;
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
   const [refreshButton, setRefreshButton] = useState(refreshButtonDefault);
   const [refreshButtonInvisibleIfNoHover, setRefreshButtonInvisibleIfNoHover] = useState(refreshButtonInvisibleIfNoHoverDefault);
   const [refreshButtonPositionSide, setRefreshButtonPositionSide] = useState(refreshButtonPositionSideDefault);
+  const [appBackgroundColor, setAppBackgroundColor] = useState(backgroundColorDefault);
 
   useEffect(() => {
     const previousNewImages = [...newImages];
@@ -93,6 +95,10 @@ function App() {
       if (properties.refreshbuttonposition) {
         setRefreshButtonPositionSide(properties.refreshbuttonposition.value);
       }
+      if (properties.backgroundcolor) {
+        console.log(getRgbValue(properties.backgroundcolor.value))
+        setAppBackgroundColor(getRgbValue(properties.backgroundcolor.value));
+      }
     },
     userDirectoryFilesAddedOrChanged: (propertyName, changedFiles) => {
       if (propertyName === 'images') {
@@ -140,10 +146,23 @@ function App() {
     }
   };
 
+  useEffect(() => {
+    document.body.style.backgroundColor = appBackgroundColor;
+
+    return () => {
+      document.body.style.backgroundColor = null;
+    };
+  }, [appBackgroundColor])
+
   return (
-    <div className={`
-      ${imageHoverEffect ? 'image-hover-effect' : ''}
-    `}>
+    <div
+      className={`
+        ${imageHoverEffect ? 'image-hover-effect' : ''}
+      `}
+      style={{
+        backgroundColor: appBackgroundColor,
+      }}
+    >
       <Gallery
         images={images}
         targetNumberOfRows={targetNumberOfRows}

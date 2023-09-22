@@ -6,5 +6,6 @@
   "imageHoverEffect": false,
   "refreshButton": true,
   "refreshButtonInvisibleIfNoHover": true,
-  "refreshButtonPositionSide": "bottom-left"
+  "refreshButtonPositionSide": "bottom-left",
+  "backgroundColor": "rgb(255, 255, 255)"
 }
