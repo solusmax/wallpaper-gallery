@@ -1,12 +1,12 @@
-import PropTypes from 'prop-types';
-import { useEffect, useState } from 'react';
-import { getShuffledSlicedArray } from '../../utils';
-import useWindowDimensions from '../../hooks/use-window-dimensions';
-import PhotoAlbum from 'react-photo-album';
-import Lightbox from "yet-another-react-lightbox";
-import Zoom from "yet-another-react-lightbox/plugins/zoom";
-import "yet-another-react-lightbox/styles.css";
-import RefreshButton from '../RefreshButton/RefreshButton';
+import PropTypes from 'prop-types'
+import { useEffect, useState } from 'react'
+import { getShuffledSlicedArray } from '../../utils'
+import useWindowDimensions from '../../hooks/use-window-dimensions'
+import PhotoAlbum from 'react-photo-album'
+import Lightbox from 'yet-another-react-lightbox'
+import Zoom from 'yet-another-react-lightbox/plugins/zoom'
+import 'yet-another-react-lightbox/styles.css'
+import RefreshButton from '../RefreshButton/RefreshButton'
 
 export default function Gallery({
   images,

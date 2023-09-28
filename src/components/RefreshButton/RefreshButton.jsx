@@ -1,5 +1,5 @@
-import PropTypes from 'prop-types';
-import './RefreshButton.css';
+import PropTypes from 'prop-types'
+import './RefreshButton.css'
 
 export default function RefreshButton({ onClick, positionSide, invisibleIfNoHover }) {
   return (

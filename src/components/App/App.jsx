@@ -1,9 +1,9 @@
-import config from '../../config.json';
-import { useEffect, useState } from 'react';
-import './App.css';
-import Gallery from '../Gallery/Gallery';
-import decodeUriComponent from 'decode-uri-component';
-import { loadImage, isImagesSame, getRgbValue } from '../../utils';
+import config from '../../config.json'
+import { useEffect, useState } from 'react'
+import './App.css'
+import Gallery from '../Gallery/Gallery'
+import decodeUriComponent from 'decode-uri-component'
+import { loadImage, isImagesSame, getRgbValue } from '../../utils'
 
 let {
   targetNumberOfRows: targetNumberOfRowsDefault,

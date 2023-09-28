@@ -1,4 +1,4 @@
-import { compareByString } from "./sort";
+import { compareByString } from './sort'
 
 export const isImagesSame = (imagesA, imagesB) => {
   if (imagesA.length !== imagesB.length) {
