@@ -1,9 +1,9 @@
-import config from '../../config.json'
-import { useEffect, useState } from 'react'
-import './App.css'
-import Gallery from '../Gallery/Gallery'
-import decodeUriComponent from 'decode-uri-component'
-import { loadImage, isImagesSame, getRgbValue } from '../../utils'
+import config from '../../config.json';
+import { useEffect, useState } from 'react';
+import './App.css';
+import Gallery from '../Gallery/Gallery';
+import decodeUriComponent from 'decode-uri-component';
+import { loadImage, isImagesSame, getRgbValue } from '../../utils';
 
 let {
   targetNumberOfRows: targetNumberOfRowsDefault,
@@ -22,15 +22,27 @@ function App() {
   const [newImages, setNewImages] = useState([]);
   const [removedImageURLs, setRemovedImageURLs] = useState([]);
 
-  const [targetNumberOfRows, setTargetNumberOfRows] = useState(targetNumberOfRowsDefault);
+  const [targetNumberOfRows, setTargetNumberOfRows] = useState(
+    targetNumberOfRowsDefault,
+  );
   const [autoRefresh, setAutoRefresh] = useState(autoRefreshDefault);
-  const [autoRefreshFrequencyMinutes, setAutoRefreshFrequencyMinutes] = useState(autoRefreshFrequencyMinutesDefault);
-  const [imagesToRenderCount, setImagesToRenderCount] = useState(imagesToRenderCountDefault);
-  const [imageHoverEffect, setImageHoverEffect] = useState(imageHoverEffectDefault);
+  const [autoRefreshFrequencyMinutes, setAutoRefreshFrequencyMinutes] =
+    useState(autoRefreshFrequencyMinutesDefault);
+  const [imagesToRenderCount, setImagesToRenderCount] = useState(
+    imagesToRenderCountDefault,
+  );
+  const [imageHoverEffect, setImageHoverEffect] = useState(
+    imageHoverEffectDefault,
+  );
   const [refreshButton, setRefreshButton] = useState(refreshButtonDefault);
-  const [refreshButtonInvisibleIfNoHover, setRefreshButtonInvisibleIfNoHover] = useState(refreshButtonInvisibleIfNoHoverDefault);
-  const [refreshButtonPositionSide, setRefreshButtonPositionSide] = useState(refreshButtonPositionSideDefault);
-  const [appBackgroundColor, setAppBackgroundColor] = useState(backgroundColorDefault);
+  const [refreshButtonInvisibleIfNoHover, setRefreshButtonInvisibleIfNoHover] =
+    useState(refreshButtonInvisibleIfNoHoverDefault);
+  const [refreshButtonPositionSide, setRefreshButtonPositionSide] = useState(
+    refreshButtonPositionSideDefault,
+  );
+  const [appBackgroundColor, setAppBackgroundColor] = useState(
+    backgroundColorDefault,
+  );
 
   useEffect(() => {
     const previousNewImages = [...newImages];
@@ -38,39 +50,38 @@ function App() {
     const throttlingTimeoutId = setTimeout(() => {
       if (isImagesSame(previousNewImages, newImages)) {
         setImages((prevState) => {
-          return [
-            ...prevState,
-            ...newImages,
-          ]
+          return [...prevState, ...newImages];
         });
         setRemovedImageURLs([]);
       }
-    }, 500)
+    }, 500);
 
     return () => {
-      clearTimeout(throttlingTimeoutId)
-    }
-  }, [newImages])
+      clearTimeout(throttlingTimeoutId);
+    };
+  }, [newImages]);
 
   useEffect(() => {
     if (removedImageURLs.length > 0) {
       setImages((prevState) => {
-        return [...prevState.filter((image) => {
-          for (let removedImageURL of removedImageURLs) {
-            if (image.src == removedImageURL) {
-              return false;
+        return [
+          ...prevState.filter((image) => {
+            for (let removedImageURL of removedImageURLs) {
+              if (image.src == removedImageURL) {
+                return false;
+              }
             }
-          }
 
-          return true;
-        })]
-      })
-      setNewImages([])
+            return true;
+          }),
+        ];
+      });
+      setNewImages([]);
     }
-  }, [removedImageURLs])
+  }, [removedImageURLs]);
 
   window.wallpaperPropertyListener = {
-    applyUserProperties: function(properties) {
+    applyUserProperties: function (properties) {
       if (properties.targetnumberofrows) {
         setTargetNumberOfRows(properties.targetnumberofrows.value);
       }
@@ -78,7 +89,9 @@ function App() {
         setAutoRefresh(properties.autorefresh.value);
       }
       if (properties.autorefreshfrequencymins) {
-        setAutoRefreshFrequencyMinutes(properties.autorefreshfrequencymins.value);
+        setAutoRefreshFrequencyMinutes(
+          properties.autorefreshfrequencymins.value,
+        );
       }
       if (properties.hovereffect) {
         setImageHoverEffect(properties.hovereffect.value);
@@ -90,7 +103,9 @@ function App() {
         setRefreshButton(properties.refreshbutton.value);
       }
       if (properties.refreshbuttoninvisibility) {
-        setRefreshButtonInvisibleIfNoHover(properties.refreshbuttoninvisibility.value);
+        setRefreshButtonInvisibleIfNoHover(
+          properties.refreshbuttoninvisibility.value,
+        );
       }
       if (properties.refreshbuttonposition) {
         setRefreshButtonPositionSide(properties.refreshbuttonposition.value);
@@ -122,12 +137,12 @@ function App() {
                   width: newImage.naturalWidth,
                   height: newImage.naturalHeight,
                 },
-              ]
-            })
+              ];
+            });
           }
 
           generateNewImagesData();
-        })
+        });
       }
     },
     userDirectoryFilesRemoved: (propertyName, removedFiles) => {
@@ -136,14 +151,11 @@ function App() {
           const decodedRemovedImageUrl = decodeUriComponent(removedImage);
 
           setRemovedImageURLs((prevState) => {
-            return [
-              ...prevState,
-              decodedRemovedImageUrl,
-            ]
-          })
-        })
+            return [...prevState, decodedRemovedImageUrl];
+          });
+        });
       }
-    }
+    },
   };
 
   useEffect(() => {
@@ -152,7 +164,7 @@ function App() {
     return () => {
       document.body.style.backgroundColor = null;
     };
-  }, [appBackgroundColor])
+  }, [appBackgroundColor]);
 
   return (
     <div
@@ -174,7 +186,7 @@ function App() {
         refreshButtonPositionSide={refreshButtonPositionSide}
       />
     </div>
-  )
+  );
 }
 
-export default App
+export default App;

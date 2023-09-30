@@ -1,12 +1,12 @@
-import PropTypes from 'prop-types'
-import { useEffect, useState } from 'react'
-import { getShuffledSlicedArray } from '../../utils'
-import useWindowDimensions from '../../hooks/use-window-dimensions'
-import PhotoAlbum from 'react-photo-album'
-import Lightbox from 'yet-another-react-lightbox'
-import Zoom from 'yet-another-react-lightbox/plugins/zoom'
-import 'yet-another-react-lightbox/styles.css'
-import RefreshButton from '../RefreshButton/RefreshButton'
+import PropTypes from 'prop-types';
+import { useEffect, useState } from 'react';
+import { getShuffledSlicedArray } from '../../utils';
+import useWindowDimensions from '../../hooks/use-window-dimensions';
+import PhotoAlbum from 'react-photo-album';
+import Lightbox from 'yet-another-react-lightbox';
+import Zoom from 'yet-another-react-lightbox/plugins/zoom';
+import 'yet-another-react-lightbox/styles.css';
+import RefreshButton from '../RefreshButton/RefreshButton';
 
 export default function Gallery({
   images,
@@ -18,14 +18,16 @@ export default function Gallery({
   refreshButtonInvisibleIfNoHover,
   refreshButtonPositionSide,
 }) {
-  const [renderedImages, setRenderedImages] = useState(getShuffledSlicedArray(images, imagesToRenderCount));
+  const [renderedImages, setRenderedImages] = useState(
+    getShuffledSlicedArray(images, imagesToRenderCount),
+  );
   const [selectedImage, setSelectedImage] = useState(-1);
 
   const { height: windowHeight } = useWindowDimensions();
 
   useEffect(() => {
     setRenderedImages(getShuffledSlicedArray(images, imagesToRenderCount));
-  }, [images, imagesToRenderCount])
+  }, [images, imagesToRenderCount]);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -37,66 +39,74 @@ export default function Gallery({
     return () => {
       clearInterval(interval);
     };
-  }, [autoRefreshFrequency, selectedImage, autoRefresh, imagesToRenderCount, images]);
+  }, [
+    autoRefreshFrequency,
+    selectedImage,
+    autoRefresh,
+    imagesToRenderCount,
+    images,
+  ]);
 
   const handleRefreshButtonClick = (evt) => {
     evt.preventDefault();
 
     setRenderedImages(getShuffledSlicedArray(images, imagesToRenderCount));
-  }
+  };
 
   return (
-      <>
-        {refreshButton && (
-          <RefreshButton onClick={handleRefreshButtonClick} positionSide={refreshButtonPositionSide} invisibleIfNoHover={refreshButtonInvisibleIfNoHover} />
-        )}
-        <PhotoAlbum
-          layout="rows"
-          spacing={() => 0}
-          targetRowHeight={() => Math.round(windowHeight / targetNumberOfRows)}
-          photos={renderedImages}
-          onClick={({ index: current }) => {
-            setSelectedImage(current)
-          }}
+    <>
+      {refreshButton && (
+        <RefreshButton
+          onClick={handleRefreshButtonClick}
+          positionSide={refreshButtonPositionSide}
+          invisibleIfNoHover={refreshButtonInvisibleIfNoHover}
         />
-        <Lightbox
-          index={0}
-          slides={[renderedImages[selectedImage]]}
-          open={selectedImage >= 0}
-          close={() => setSelectedImage(-1)}
-          styles={{
-            container: {
-              backgroundColor: 'rgba(0, 0, 0, 0.93)',
-            }
-          }}
-          plugins={[
-            Zoom,
-          ]}
-          zoom={{
-            maxZoomPixelRatio: 10,
-            zoomInMultiplier: 1.7,
-            doubleClickMaxStops: 3,
-          }}
-          animation={{
-            zoom: 350,
-            fade: 150,
-          }}
-          controller={{
-            closeOnBackdropClick: true,
-          }}
-          render={{
-            iconZoomIn: () => null,
-            iconZoomOut: () => null,
-            iconClose: () => null,
-            buttonPrev: () => null,
-            buttonNext: () => null,
-          }}
-          carousel={{
-            finite: true,
-          }}
-        />
-      </>
-  )
+      )}
+      <PhotoAlbum
+        layout="rows"
+        spacing={() => 0}
+        targetRowHeight={() => Math.round(windowHeight / targetNumberOfRows)}
+        photos={renderedImages}
+        onClick={({ index: current }) => {
+          setSelectedImage(current);
+        }}
+      />
+      <Lightbox
+        index={0}
+        slides={[renderedImages[selectedImage]]}
+        open={selectedImage >= 0}
+        close={() => setSelectedImage(-1)}
+        styles={{
+          container: {
+            backgroundColor: 'rgba(0, 0, 0, 0.93)',
+          },
+        }}
+        plugins={[Zoom]}
+        zoom={{
+          maxZoomPixelRatio: 10,
+          zoomInMultiplier: 1.7,
+          doubleClickMaxStops: 3,
+        }}
+        animation={{
+          zoom: 350,
+          fade: 150,
+        }}
+        controller={{
+          closeOnBackdropClick: true,
+        }}
+        render={{
+          iconZoomIn: () => null,
+          iconZoomOut: () => null,
+          iconClose: () => null,
+          buttonPrev: () => null,
+          buttonNext: () => null,
+        }}
+        carousel={{
+          finite: true,
+        }}
+      />
+    </>
+  );
 }
 
 Gallery.propTypes = {
@@ -108,4 +118,4 @@ Gallery.propTypes = {
   refreshButton: PropTypes.bool.isRequired,
   refreshButtonInvisibleIfNoHover: PropTypes.bool.isRequired,
   refreshButtonPositionSide: PropTypes.string.isRequired,
-}
+};

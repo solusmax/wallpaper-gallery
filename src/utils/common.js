@@ -16,15 +16,15 @@ export const getShuffledSlicedArray = (array, newSize) => {
   newArray.length = arraySize;
 
   return newArray.splice(0, resultArrayNewSize);
-}
+};
 
 export const getRandomInteger = (min, max) => {
   return min + Math.floor(Math.random() * (max - min + 1));
-}
+};
 
 export const getRgbValue = (wallpaperEngineCustomColor) => {
   let rgbValue = wallpaperEngineCustomColor
     .split(' ')
     .map((color) => Math.ceil(color * 255));
   return `rgb(${rgbValue})`;
-}
+};
