@@ -6,7 +6,10 @@
     "build": "npm run lint && npm run build:demo",
     "build:demo": "sh bash/build.sh -s && vite build && sh bash/build.sh -e",
     "backup-project-files": "sh bash/build.sh -c",
+    "lint": "npm run lint:css && npm run lint:js && npm run lint:html",
     "lint:js": "prettier --write \"./src/**/*.{js,jsx,ts,tsx}\" && eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
+    "lint:css": "prettier --write \"./src/**/*.css\"",
+    "lint:html": "prettier --write \"./**/*.html\"",
     "preview": "npm run build && vite preview --open"
   },
   "dependencies": {
