@@ -1,4 +1,6 @@
 {
+	"contentrating" : "Everyone",
+	"description" : "Customizable gallery for your own images.",
 	"file" : "index.html",
 	"general" : 
 	{
@@ -146,7 +148,10 @@
 		}
 	},
 	"preview" : "preview.jpg",
+	"tags" : [ "Unspecified" ],
 	"title" : "Gallery",
 	"type" : "web",
-	"version" : 0
+	"version" : 1,
+	"workshopid" : "3039379904",
+	"workshopurl" : "steam://url/CommunityFilePage/3039379904"
 }
