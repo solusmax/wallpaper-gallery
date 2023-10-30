@@ -111,7 +111,6 @@ function App() {
         setRefreshButtonPositionSide(properties.refreshbuttonposition.value);
       }
       if (properties.backgroundcolor) {
-        console.log(getRgbValue(properties.backgroundcolor.value))
         setAppBackgroundColor(getRgbValue(properties.backgroundcolor.value));
       }
     },
